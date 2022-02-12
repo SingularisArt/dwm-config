@@ -12,9 +12,63 @@
 /* appearance */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const int usealtbar          = 1;        /* 1 means use non-dwm status bar */
-static const char *altbarclass = "Polybar";     /* Alternate bar class name */
-static const char *altbarcmd  = "$HOME/bar.sh"; /* Alternate bar launch command */
+static const double defaultopacity  = 0.75;
+
+// diff -r 53d98940cb04 dwm.c
+// --- a/dwm.c	Fri Jun 04 11:41:16 2010 +0100
+// +++ b/dwm.c	Sun Jun 06 22:48:32 2010 +0200
+// @@ -58,7 +58,7 @@
+//  enum { CurNormal, CurResize, CurMove, CurLast };        /* cursor */
+//  enum { ColBorder, ColFG, ColBG, ColLast };              /* color */
+//  enum { NetSupported, NetWMName, NetWMState,
+// -       NetWMFullscreen, NetLast };                      /* EWMH atoms */
+// +       NetWMFullscreen, NetLast, NetWMWindowsOpacity }; /* EWMH atoms */
+//  enum { WMProtocols, WMDelete, WMState, WMLast };        /* default atoms */
+//  enum { ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle,
+//         ClkClientWin, ClkRootWin, ClkLast };             /* clicks */
+// @@ -179,6 +179,7 @@
+//  static void drawtext(const char *text, unsigned long col[ColLast], Bool invert);
+//  static void enternotify(XEvent *e);
+//  static void expose(XEvent *e);
+// +static void opacity(Client *c, double opacity);
+//  static void focus(Client *c);
+//  static void focusin(XEvent *e);
+//  static void focusmon(const Arg *arg);
+// @@ -816,6 +817,18 @@
+//  }
+//  
+//  void
+// +opacity(Client *c, double opacity)
+// +{
+// +	if(opacity >= 0 && opacity <= 1) {
+// +		unsigned long real_opacity[] = { opacity * 0xffffffff };
+// +		XChangeProperty(dpy, c->win, netatom[NetWMWindowsOpacity], XA_CARDINAL,
+// +				32, PropModeReplace, (unsigned char *)real_opacity,
+// +				1);
+// +	} else
+// +		XDeleteProperty(dpy, c->win, netatom[NetWMWindowsOpacity]);
+// +}
+// +
+// +void
+//  focus(Client *c) {
+//  	if(!c || !ISVISIBLE(c))
+//  		for(c = selmon->stack; c && !ISVISIBLE(c); c = c->snext);
+// @@ -1104,6 +1117,7 @@
+//  	*c = cz;
+//  	c->win = w;
+//  	updatetitle(c);
+// +	opacity(c, defaultopacity);
+//  	if(XGetTransientForHint(dpy, w, &trans))
+//  		t = wintoclient(trans);
+//  	if(t) {
+// @@ -1539,6 +1553,7 @@
+//  	netatom[NetWMName] = XInternAtom(dpy, "_NET_WM_NAME", False);
+//  	netatom[NetWMState] = XInternAtom(dpy, "_NET_WM_STATE", False);
+//  	netatom[NetWMFullscreen] = XInternAtom(dpy, "_NET_WM_STATE_FULLSCREEN", False);
+// +	netatom[NetWMWindowsOpacity] = XInternAtom(dpy, "_NET_WM_WINDOW_OPACITY", False);
+//  	/* init cursors */
+//  	cursor[CurNormal] = XCreateFontCursor(dpy, XC_left_ptr);
+//  	cursor[CurResize] = XCreateFontCursor(dpy, XC_sizing);
 
 static unsigned int borderpx        = 3;
 static unsigned int snap            = 32;
@@ -179,8 +233,8 @@ static Key keys[] = {
   { MODKEY|ShiftMask,		                XK_b,							spawn,					SHCMD(TERMINAL " -e bashtop") },
   { MODKEY|ShiftMask,		                XK_w,							spawn,					SHCMD(TERMINAL " -e newsboat") },
   { MODKEY|ShiftMask,		                XK_r,							spawn,					SHCMD(TERMINAL " -e htop") },
-  { MODKEY|ShiftMask,		                XK_d,							spawn,					SHCMD("$HOME/Singularis/local/scripts/xmenu-script") },
-  { MODKEY|ShiftMask,		                XK_s,							spawn,					SHCMD("tdrop -am -n 0 xfce4-terminal") },
+  { MODKEY|ControlMask,		              XK_d,							spawn,					SHCMD("$HOME/Singularis/local/scripts/xmenu-script") },
+  { MODKEY|ControlMask,		              XK_s,							spawn,					SHCMD("tdrop -am -n 0 xfce4-terminal") },
 
   { MODKEY,							                XK_z,							incrgaps,				{.i = +3 } },
   { MODKEY,							                XK_x,							incrgaps,				{.i = -3 } },
@@ -217,6 +271,10 @@ static Key keys[] = {
   { MODKEY|AltMask,	 		                XK_z,							spawn,					SHCMD("$HOME/Singularis/local/scripts/school/rofi-zathura.sh") },
   { MODKEY|AltMask,	 		                XK_o,							spawn,					SHCMD("$HOME/Singularis/local/scripts/school/rofi-compile.sh") },
 
+  { MODKEY|ShiftMask,		                XK_s,	            spawn,	        SHCMD("transset-df -a --dec .1") },
+  { MODKEY|ShiftMask,		                XK_d,	            spawn,	        SHCMD("transset-df -a --inc .1") },
+  { MODKEY|ShiftMask,		                XK_f,	            spawn,	        SHCMD("transset-df -a .9") },
+
   { MODKEY,							                XK_space,					zoom,						{0} },
   { MODKEY|ShiftMask,		                XK_space,					togglefloating,	{0} },
 
@@ -237,7 +295,7 @@ static Button buttons[] = {
 #endif
   { ClkStatusText,        ShiftMask,      Button3,        spawn,          SHCMD(TERMINAL " -e nvim ~/.local/src/dwmblocks/config.h") },
   { ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
-  { ClkClientWin,         MODKEY,         Button2,        defaultgaps,	{0} },
+  { ClkClientWin,         MODKEY,         Button2,        defaultgaps,	  {0} },
   { ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
   { ClkClientWin,					MODKEY,					Button4,				incrgaps,	{.i = +1} },
   { ClkClientWin,					MODKEY,					Button5,				incrgaps,	{.i = -1} },
