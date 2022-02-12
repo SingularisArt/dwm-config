@@ -1,0 +1,24 @@
+--- config.def.h	Tue Dec 04 21:54:44 2012 +0200
++++ config.def.h	Tue Dec 04 21:54:44 2012 +0200
+@@ -54,6 +54,8 @@
+ static const char *termcmd[]  = { "urxvtc", NULL };
+ static const char *filemancmd[]  = { "thunar", NULL };
+ 
++#include "selfrestart.c"
++
+ static Key keys[] = {
+ 	/* modifier                     key        function        argument */
+ 	{ MODKEY,                       XK_r,      spawn,          {.v = dmenucmd } },
+@@ -89,6 +91,7 @@
+ 	TAGKEYS(                        XK_7,                      6)
+ 	TAGKEYS(                        XK_8,                      7)
+ 	TAGKEYS(                        XK_9,                      8)
++    { MODKEY|ShiftMask,             XK_r,      self_restart,   {0} },
+ 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+ };
+ 
+@@ -108,4 +111,3 @@
+ 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
+ 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
+ };
+-
