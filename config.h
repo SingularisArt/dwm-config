@@ -3,7 +3,7 @@
 /* Constants */
 #define TERMINAL "xfce4-terminal"
 #define TERMCLASS "St"
-#define BROWSER "google-chrome"
+#define BROWSER "google-chrome-stable"
 #define FILEBROWSER "nautilus"
 #define AltMask Mod1Mask
 #define PDF_VIEWER "zathura"
