@@ -9,7 +9,7 @@
 #define AltMask Mod1Mask
 #define PDF_VIEWER "zathura"
 #define CURRENTCOURSE "~/Documents/notes/current-course"
-#define MAIN_PATH "~/Singularis/local/school/main.py"
+#define SCHOOL_PATH "~/Singularis/local/school"
 
 // Appearance
 static const unsigned int borderpx  = 3;    // border pixel of windows

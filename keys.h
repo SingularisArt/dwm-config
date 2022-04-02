@@ -65,20 +65,13 @@ static Key keys[] = {
   { ControlMask,		                    XK_grave,					spawn,	        SHCMD("dunstctl history-pop") },
 
   // School specific keybindings
-  { MODKEY|AltMask,	 		                XK_c,							spawn,					SHCMD(MAIN_PATH " --change-course") },
-  { MODKEY|AltMask,	 		                XK_l,							spawn,					SHCMD(MAIN_PATH " --lessons") },
-  { MODKEY|AltMask,	 		                XK_g,							spawn,					SHCMD(MAIN_PATH " --grades") },
-  { MODKEY|AltMask,	 		                XK_e,							spawn,					SHCMD(MAIN_PATH " --new-lesson") },
-  { MODKEY|AltMask,	 		                XK_m,							spawn,					SHCMD(MAIN_PATH " --commands") },
-  { MODKEY|AltMask,	 		                XK_p,							spawn,					SHCMD(MAIN_PATH " --projects") },
-  { MODKEY|AltMask,	 		                XK_y,							spawn,					SHCMD("$HOME/Singularis/local/school/stand-alones/rofi-yaml.sh") },
-  { MODKEY|AltMask,	 		                XK_n,							spawn,					SHCMD("$HOME/Singularis/local/school/stand-alones/rofi-nvim.sh") },
-  { MODKEY|AltMask,	 		                XK_s,							spawn,					SHCMD("$HOME/Singularis/local/school/stand-alones/rofi-source-code.sh") },
-  { MODKEY|AltMask,	 		                XK_w,							spawn,					SHCMD("$HOME/Singularis/local/school/stand-alones/rofi-web-browser.sh") },
-  { MODKEY|AltMask,	 		                XK_f,							spawn,					SHCMD("$HOME/Singularis/local/school/stand-alones/rofi-file-browser.sh") },
-  { MODKEY|AltMask,	 		                XK_i,							spawn,					SHCMD("$HOME/Singularis/local/school/stand-alones/rofi-inkscape.sh") },
-  { MODKEY|AltMask,	 		                XK_z,							spawn,					SHCMD("$HOME/Singularis/local/school/stand-alones/rofi-zathura.sh") },
-  { MODKEY|AltMask,	 		                XK_o,							spawn,					SHCMD("$HOME/Singularis/local/school/stand-alones/rofi-compile.sh") },
+  { MODKEY|AltMask,	 		                XK_c,							spawn,					SHCMD(SCHOOL_PATH "/main.py --change-course") },
+  { MODKEY|AltMask,	 		                XK_l,							spawn,					SHCMD(SCHOOL_PATH "/main.py --lessons") },
+  { MODKEY|AltMask,	 		                XK_g,							spawn,					SHCMD(SCHOOL_PATH "/main.py --grades") },
+  { MODKEY|AltMask,	 		                XK_e,							spawn,					SHCMD(SCHOOL_PATH "/main.py --new-lesson") },
+  { MODKEY|AltMask,	 		                XK_m,							spawn,					SHCMD(SCHOOL_PATH "/main.py --commands") },
+  { MODKEY|AltMask,	 		                XK_p,							spawn,					SHCMD(SCHOOL_PATH "/main.py --projects") },
+  { MODKEY|AltMask,	 		                XK_z,							spawn,					SHCMD(SCHOOL_PATH "/run-bash-scripts.py") },
 
   // Changing layouts
   { MODKEY|AltMask,							        XK_0,							setlayout,			{.v = &layouts[0]} },
