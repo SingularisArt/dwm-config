@@ -20,59 +20,6 @@ static Key keys[] = {
   TAGKEYS(XK_7,	6)
   TAGKEYS(XK_8,	7)
   TAGKEYS(XK_9,	8)
-  { MODKEY,							                XK_w,						spawn,					SHCMD(BROWSER) },
-  { MODKEY,							                XK_F1,						spawn,					SHCMD("zathura ~/Singularis/aspects/dwm/keys.pdf") },
-
-  // Open Applications
-  { MODKEY,							                XK_Return,				    spawn,				{.v = termcmd } },
-  { MODKEY,                                         XK_n,                       spawn,              SHCMD(TERMINAL " -e 'nvim'") },
-  { MODKEY,                                         XK_b,                       spawn,              SHCMD(TERMINAL " -e 'newsboat'") },
-  { MODKEY,                                         XK_m,                       spawn,              SHCMD(TERMINAL " -e 'neomutt'") },
-  { MODKEY,                                         XK_c,                       spawn,              SHCMD(TERMINAL " -e 'calcurse'") },
-  { MODKEY,							                XK_e,						spawn,				SHCMD(TERMINAL " -e 'ncmpcpp'") },
-  { MODKEY,							                XK_p,						spawn,				SHCMD(TERMINAL " -e 'castero'") },
-  { MODKEY|ShiftMask,	                            XK_k,						spawn,				SHCMD(TERMINAL " -e 'kmon'") },
-  { MODKEY|ShiftMask,		                        XK_g,						spawn,				SHCMD(TERMINAL " -e 'gotop'") },
-  { MODKEY|ShiftMask,		                        XK_p,						spawn,				SHCMD(TERMINAL " -e 'pulsemixer'") },
-  { MODKEY|ShiftMask,		                        XK_b,						spawn,				SHCMD(TERMINAL " -e 'bashtop'") },
-  { MODKEY|ShiftMask,		                        XK_t,						spawn,				SHCMD(TERMINAL " -e 's-tui'") },
-  { MODKEY|ShiftMask,		                        XK_d,						spawn,				SHCMD("$HOME/Singularis/local/scripts/xmenu-script") },
-  { MODKEY|ShiftMask,		                        XK_z,						spawn,				SHCMD("zathura") },
-  { MODKEY|ShiftMask,		                        XK_s,						spawn,				SHCMD("tdrop -am -n 0 xfce4-terminal") },
-
-  // Rofi bindings
-  { MODKEY,                                         XK_r,                       spawn,              SHCMD("rofi -show drun -show-icons") },
-  { MODKEY|ShiftMask,                               XK_r,                       spawn,              SHCMD("rofi -show emoji -modi emoji") },
-  { MODKEY|AltMask|ShiftMask,                       XK_r,                       spawn,              SHCMD("rofi -show window") },
-  { MODKEY,							                XK_BackSpace,			    spawn,				SHCMD("$HOME/.config/rofi/applets/menu/powermenu.sh") },
-  
-  // MPC specific keybindings
-  { MODKEY|AltMask,  		                        XK_t,						spawn,				SHCMD("mpc toggle") },
-  { MODKEY|AltMask,  		                        XK_r,				        spawn,				SHCMD("mpc seek 0") },
-  { MODKEY|AltMask|ShiftMask,		                XK_bracketleft,		        spawn,				SHCMD("mpc seek +60") },
-  { MODKEY|AltMask|ShiftMask,		                XK_bracketright,	        spawn,				SHCMD("mpc seek -60") },
-  { MODKEY|AltMask,							        XK_bracketleft,		        spawn,				SHCMD("mpc seek +10") },
-  { MODKEY|AltMask,							        XK_bracketright,	        spawn,				SHCMD("mpc seek -10") },
-  { MODKEY|AltMask,			                        XK_comma,					spawn,				SHCMD("mpc prev") },
-  { MODKEY|AltMask,			                        XK_period,				    spawn,				SHCMD("mpc next") },
-  { MODKEY|AltMask,	                                XK_u,				        spawn,				SHCMD("pamixer -i 5 && $HOME/Singularis/local/scripts/volume-indicator show") },
-  { MODKEY|AltMask,	                                XK_d,				        spawn,				SHCMD("pamixer -d 5 && $HOME/Singularis/local/scripts/volume-indicator show") },
-  { MODKEY|AltMask,  		                        XK_v,						spawn,				SHCMD("$HOME/.config/rofi/applets/applets/mpd.sh") },
-
-  // Dunst specific keybindings
-  { ControlMask,		                            XK_space,					spawn,	            SHCMD("dunstctl close") },
-  { ControlMask|ShiftMask,		                    XK_space,					spawn,	            SHCMD("dunstctl close-all") },
-  { ControlMask,		                            XK_grave,					spawn,	            SHCMD("dunstctl history-pop") },
-
-  // School specific keybindings
-  { MODKEY|AltMask,	 		                        XK_c,						spawn,				SHCMD(SCHOOL_PATH "/main.py --change-course") },
-  { MODKEY|AltMask,	 		                        XK_l,						spawn,				SHCMD(SCHOOL_PATH "/main.py --lessons") },
-  { MODKEY|AltMask,	 		                        XK_g,						spawn,				SHCMD(SCHOOL_PATH "/main.py --grades") },
-  { MODKEY|AltMask,	 		                        XK_e,						spawn,				SHCMD(SCHOOL_PATH "/main.py --new-lesson") },
-  { MODKEY|AltMask,	 		                        XK_m,						spawn,				SHCMD(SCHOOL_PATH "/main.py --commands") },
-  { MODKEY|AltMask,	 		                        XK_p,						spawn,				SHCMD(SCHOOL_PATH "/main.py --projects") },
-  { MODKEY|AltMask,	 		                        XK_z,						spawn,				SHCMD(SCHOOL_PATH "/run-bash-scripts.py") },
-
   // Changing layouts
   { MODKEY|AltMask,							        XK_0,						setlayout,			{.v = &layouts[0]} },
   { MODKEY|AltMask,							        XK_1,						setlayout,			{.v = &layouts[1]} },

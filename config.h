@@ -10,6 +10,7 @@
 #define PDF_VIEWER "zathura"
 #define CURRENTCOURSE "~/Documents/notes/current-course"
 #define SCHOOL_PATH "~/Singularis/local/school"
+#define THIRD_PARTY "~/Singularis/third-party-tools"
 
 // Appearance
 static const unsigned int borderpx  = 3;    // border pixel of windows
