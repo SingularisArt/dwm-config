@@ -41,8 +41,7 @@ index 4465af1..3919d47 100644
  	} else if (cme->message_type == netatom[NetActiveWindow]) {
 -		if (c != selmon->sel && !c->isurgent)
 -			seturgent(c, 1);
-+   int i = 0;
-+		for (i; i < LENGTH(tags) && !((1 << i) & c->tags); i++);
++		for (i = 0; i < LENGTH(tags) && !((1 << i) & c->tags); i++);
 +		if (i < LENGTH(tags)) {
 +			const Arg a = {.ui = 1 << i};
 +			selmon = c->mon;

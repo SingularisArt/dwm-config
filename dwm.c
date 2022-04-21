@@ -203,6 +203,7 @@ static void applyrules(Client *c);
 static int applysizehints(Client *c, int *x, int *y, int *w, int *h,
                           int interact);
 static void arrange(Monitor *m);
+static void wrap(const Client *c);
 static void arrangemon(Monitor *m);
 static void attach(Client *c);
 static void attachstack(Client *c);
@@ -223,6 +224,8 @@ static void detachstack(Client *c);
 static Monitor *dirtomon(int dir);
 static void drawbar(Monitor *m);
 static void drawbars(void);
+static void enqueue(Client *c);
+static void enqueuestack(Client *c);
 static void enternotify(XEvent *e);
 static void expose(XEvent *e);
 static void focus(Client *c);
@@ -254,6 +257,7 @@ static void resize(Client *c, int x, int y, int w, int h, int interact);
 static void resizeclient(Client *c, int x, int y, int w, int h);
 static void resizemouse(const Arg *arg);
 static void restack(Monitor *m);
+static void rotatestack(const Arg *arg);
 static void run(void);
 static void runAutostart(void);
 static void scan(void);
@@ -299,6 +303,7 @@ static void updatetitle(Client *c);
 static void updatewindowtype(Client *c);
 static void updatewmhints(Client *c);
 static void view(const Arg *arg);
+static void warp(const Client *c);
 static Client *wintoclient(Window w);
 static Monitor *wintomon(Window w);
 static int xerror(Display *dpy, XErrorEvent *ee);
@@ -483,6 +488,24 @@ void arrange(Monitor *m) {
       arrangemon(m);
 }
 
+void warp(const Client *c) {
+  int x, y;
+
+  if (!c) {
+    XWarpPointer(dpy, None, root, 0, 0, 0, 0, selmon->wx + selmon->ww / 2,
+                 selmon->wy + selmon->wh / 2);
+    return;
+  }
+
+  if (!getrootptr(&x, &y) ||
+      (x > c->x - c->bw && y > c->y - c->bw && x < c->x + c->w + c->bw * 2 &&
+       y < c->y + c->h + c->bw * 2) ||
+      (y > c->mon->by && y < c->mon->by + bh) || (c->mon->topbar && !y))
+    return;
+
+  XWarpPointer(dpy, None, c->win, 0, 0, 0, 0, c->w / 2, c->h / 2);
+}
+
 void arrangemon(Monitor *m) {
   strncpy(m->ltsymbol, m->lt[m->sellt]->symbol, sizeof m->ltsymbol);
   if (m->lt[m->sellt]->arrange)
@@ -566,6 +589,7 @@ void buttonpress(XEvent *e) {
     unfocus(selmon->sel, 1);
     selmon = m;
     focus(NULL);
+    warp(selmon->sel);
   }
   if (ev->window == selmon->barwin) {
     i = x = 0;
@@ -670,6 +694,7 @@ void cleanupmon(Monitor *mon) {
 void clientmessage(XEvent *e) {
   XClientMessageEvent *cme = &e->xclient;
   Client *c = wintoclient(cme->window);
+  unsigned int i;
 
   if (!c)
     return;
@@ -680,15 +705,16 @@ void clientmessage(XEvent *e) {
                         || (cme->data.l[0] == 2 /* _NET_WM_STATE_TOGGLE */ &&
                             !c->isfullscreen)));
   } else if (cme->message_type == netatom[NetActiveWindow]) {
-      int i = 0;
-      for (i; i < LENGTH(tags) && !((1 << i) & c->tags); i++);
-      if (i < LENGTH(tags)) {
-          const Arg a = {.ui = 1 << i};
-          selmon = c->mon;
-          view(&a);
-          focus(c);
-          restack(selmon);
-      }
+    int i;
+    for (i = 0; i < LENGTH(tags) && !((1 << i) & c->tags); i++)
+      ;
+    if (i < LENGTH(tags)) {
+      const Arg a = {.ui = 1 << i};
+      selmon = c->mon;
+      view(&a);
+      focus(c);
+      restack(selmon);
+    }
   }
 }
 
@@ -1530,6 +1556,9 @@ void restack(Monitor *m) {
   XSync(dpy, False);
   while (XCheckMaskEvent(dpy, EnterWindowMask, &ev))
     ;
+  if (m == selmon && (m->tagset[m->seltags] & m->sel->tags) &&
+      selmon->lt[selmon->sellt] != &layouts[2])
+    warp(m->sel);
 }
 
 void run(void) {
