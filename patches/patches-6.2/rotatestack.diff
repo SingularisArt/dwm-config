@@ -1,7 +1,7 @@
 diff --git a/config.h b/config.h
 index fd77a07..09737d7 100644
---- a/config.def.h
-+++ b/config.def.h
+--- a/config.h
++++ b/config.h
 @@ -64,6 +64,8 @@ static Key keys[] = {
  	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
  	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },

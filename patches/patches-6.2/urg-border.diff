@@ -4,14 +4,14 @@ Date: Sun, 21 Jun 2020 14:00:40 +0200
 Subject: [PATCH] Make the borders of urgent windows a different color - for dwm 6.2
 
 ---
- config.def.h | 2 ++
+ config.h | 2 ++
  dwm.c        | 7 +++++--
  2 files changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/config.def.h b/config.def.h
+diff --git a/config.h b/config.h
 index 1c0b587..1cb4492 100644
---- a/config.def.h
-+++ b/config.def.h
+--- a/config.h
++++ b/config.h
 @@ -12,10 +12,12 @@ static const char col_gray2[]       = "#444444";
  static const char col_gray3[]       = "#bbbbbb";
  static const char col_gray4[]       = "#eeeeee";

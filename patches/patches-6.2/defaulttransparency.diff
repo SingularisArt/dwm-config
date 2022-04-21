@@ -1,6 +1,6 @@
-diff -r 53d98940cb04 config.def.h
---- a/config.def.h	Fri Jun 04 11:41:16 2010 +0100
-+++ b/config.def.h	Sun Jun 06 22:48:32 2010 +0200
+diff -r 53d98940cb04 config.h
+--- a/config.h	Fri Jun 04 11:41:16 2010 +0100
++++ b/config.h	Sun Jun 06 22:48:32 2010 +0200
 @@ -12,14 +12,16 @@
  static const unsigned int snap      = 32;       /* snap pixel */
  static const Bool showbar           = True;     /* False means no bar */

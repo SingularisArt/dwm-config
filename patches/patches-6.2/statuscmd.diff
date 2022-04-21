@@ -5,14 +5,14 @@ Subject: [PATCH] [statuscmd] Signal mouse button and click location to status
  monitor
 
 ---
- config.def.h |   6 +++-
+ config.h |   6 +++-
  dwm.c        | 100 ++++++++++++++++++++++++++++++++++++++++++++++++---
  2 files changed, 100 insertions(+), 6 deletions(-)
 
-diff --git a/config.def.h b/config.def.h
+diff --git a/config.h b/config.h
 index 1c0b587..154a59b 100644
---- a/config.def.h
-+++ b/config.def.h
+--- a/config.h
++++ b/config.h
 @@ -54,6 +54,8 @@ static const Layout layouts[] = {
  /* helper for spawning shell commands in the pre dwm-5.0 fashion */
  #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }

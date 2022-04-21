@@ -17,14 +17,14 @@ The vanilla patch doesn't respect the master-area which is defined by
 the rmaster-patch. To make it work with the rmaster-patch apply the
 dwm-deck-rmaster patch on top of the dwm-deck patch.
 ---
- config.def.h |  2 ++
+ config.h |  2 ++
  dwm.c        | 26 ++++++++++++++++++++++++++
  2 files changed, 28 insertions(+)
 
-diff --git a/config.def.h b/config.def.h
+diff --git a/config.h b/config.h
 index 77ff358..55d8a07 100644
---- a/config.def.h
-+++ b/config.def.h
+--- a/config.h
++++ b/config.h
 @@ -32,6 +32,7 @@ static const Layout layouts[] = {
  	{ "[]=",      tile },    /* first entry is default */
  	{ "><>",      NULL },    /* no layout function means floating behavior */

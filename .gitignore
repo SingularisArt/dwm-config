@@ -57,3 +57,5 @@ dwm
 dwm.o
 util.o
 todo/
+*.orig
+*.rej

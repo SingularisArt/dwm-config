@@ -5,9 +5,9 @@
 # Parent  aaab44133a6830c9a00263731d098c01cc1d6fb5
 selfrestart now magically locates the current dwm (no need to hardcode a path)
 
-diff -r aaab44133a68 -r 6c472a21a588 config.def.h
---- a/config.def.h	Tue Dec 04 21:54:44 2012 +0200
-+++ b/config.def.h	Tue Dec 04 21:54:44 2012 +0200
+diff -r aaab44133a68 -r 6c472a21a588 config.h
+--- a/config.h	Tue Dec 04 21:54:44 2012 +0200
++++ b/config.h	Tue Dec 04 21:54:44 2012 +0200
 @@ -54,6 +54,8 @@
  static const char *termcmd[]  = { "urxvtc", NULL };
  static const char *filemancmd[]  = { "thunar", NULL };
