@@ -232,6 +232,7 @@ static void focus(Client *c);
 static void focusin(XEvent *e);
 static void focusmon(const Arg *arg);
 static void focusstack(const Arg *arg);
+static void hideborder(const Arg *arg);
 static Atom getatomprop(Client *c, Atom prop);
 static int getrootptr(int *x, int *y);
 static long getstate(Window w);
@@ -1030,6 +1031,10 @@ void focusstack(const Arg *arg) {
   restack(selmon);
 }
 
+void hideborder(const Arg *arg) {
+  XSetWindowBorder(dpy, selmon->sel->win, scheme[SchemeSel][ColBg].pixel);
+}
+
 Atom getatomprop(Client *c, Atom prop) {
   int di;
   unsigned long dl;
@@ -1459,6 +1464,8 @@ void resize(Client *c, int x, int y, int w, int h, int interact) {
 
 void resizeclient(Client *c, int x, int y, int w, int h) {
   XWindowChanges wc;
+  unsigned int n;
+  Client *nbc;
 
   c->oldx = c->x;
   c->x = wc.x = x;
