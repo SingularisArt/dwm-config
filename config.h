@@ -46,7 +46,7 @@ static Sp scratchpads[] = {
 };
 
 /* tagging */
-static const char *tags[] = { "T", "W", "F", "B", "P", "A", "E", "S", "C" };
+static const char *tags[] = { "", "", "", "", "", "", "", "", "" };
 
 /* layout(s) */
 static float mfact     = 0.55;
